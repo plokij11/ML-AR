@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var selectedImage: Image? = nil
     @State private var isShowingMenu: Bool = false
     @State private var isShowingImagePicker: Bool = false
+    @State private var isShowingError: Bool = false
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -66,7 +67,11 @@ struct ContentView: View {
                 }
                 
                 Button(action: {
-                    isShowingMenu.toggle()
+                    if selectedImage == nil {
+                        isShowingError = true
+                    } else {
+                        isShowingMenu.toggle()
+                    }
                 }) {
                     Image(systemName: isShowingMenu ? "arrow.down.circle" : "arrow.up.circle")
                         .font(.system(size: 40))
@@ -76,6 +81,9 @@ struct ContentView: View {
             }
         }
         .edgesIgnoringSafeArea(.all)
+        .alert(isPresented: $isShowingError) {
+            Alert(title: Text("Error"), message: Text("You need to choose a photo from the gallery!"), dismissButton: .default(Text("OK")))
+        }
     }
     
     func loadImage() {
@@ -182,6 +190,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
-
-
