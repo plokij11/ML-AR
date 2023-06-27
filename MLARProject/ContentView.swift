@@ -70,6 +70,7 @@ struct ContentView: View {
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: .infinity)
                             .padding()
                     }
                     
@@ -126,6 +127,7 @@ struct MenuView: View {
     let modelController: ModelController
     var body: some View {
         VStack {
+            
             HStack {
                 Button(action: {
 
@@ -182,6 +184,40 @@ struct MenuView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
+            }
+            
+            HStack {
+                Button(action: {
+
+//                    let uiImage = selectedImage.asUIImage()
+//                        if let ciImage = CIImage(image: uiImage) {
+//                            label123 = modelController.detect(image: ciImage)
+//                        }
+                
+                }) {
+                    Text("Cartoon")
+                        .padding()
+                        .background(Color.black)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                
+                Button(action: {
+                    
+//                    let uiImage = selectedImage.asUIImage()
+//                        if let ciImage = CIImage(image: uiImage) {
+//                            resultedImage = modelController.transformToStarryNight(image: ciImage)
+//                        }
+                    
+                }) {
+                    Text("Anime")
+                        .padding()
+                        .background(Color.purple)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                
+                
             }
         }
         .padding()
