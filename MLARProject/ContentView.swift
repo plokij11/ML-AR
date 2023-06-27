@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct ContentView: View {
     @State private var selectedImage: Image? = nil
     @State private var isShowingMenu: Bool = false
     @State private var isShowingImagePicker: Bool = false
     @State private var isShowingError: Bool = false
+    
+    let modelController = ModelController()
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -58,7 +59,7 @@ struct ContentView: View {
                 Spacer()
                 
                 if isShowingMenu {
-                    MenuView()
+                    MenuView(modelController: modelController)
                         .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height / 4) // Вилітає на чверть висоти екрана
                         .background(Color.white)
                         .cornerRadius(20)
@@ -95,13 +96,20 @@ struct ContentView: View {
 }
 
 struct MenuView: View {
+    let modelController: ModelController
+    
     var body: some View {
         VStack {
             HStack {
                 Button(action: {
                     // Дії для першої кнопки
+                    if let uiImage = UIImage(named: "your_image_file_name") {
+                        if let ciImage = CIImage(image: uiImage) {
+                            modelController.detect(image: ciImage)
+                        }
+                    }
                 }) {
-                    Text("Button 1")
+                    Text("Detection")
                         .padding()
                         .background(Color.blue)
                         .foregroundColor(.white)
@@ -190,3 +198,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+

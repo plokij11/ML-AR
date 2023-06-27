@@ -11,6 +11,11 @@
 		CAB3D1AB2A4A64A000965F5F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB3D1AA2A4A64A000965F5F /* ContentView.swift */; };
 		CAB3D1AD2A4A64A100965F5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAB3D1AC2A4A64A100965F5F /* Assets.xcassets */; };
 		CAB3D1B02A4A64A100965F5F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAB3D1AF2A4A64A100965F5F /* Preview Assets.xcassets */; };
+		CAB3D1B72A4B3A1800965F5F /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB3D1B62A4B3A1800965F5F /* ModelController.swift */; };
+		CAB3D1BD2A4B3C2400965F5F /* fast-neural-style-transfer-starry-night.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = CAB3D1B92A4B3C2400965F5F /* fast-neural-style-transfer-starry-night.mlmodel */; };
+		CAB3D1BE2A4B3C2400965F5F /* fast-neural-style-transfer-mosaic.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = CAB3D1BA2A4B3C2400965F5F /* fast-neural-style-transfer-mosaic.mlmodel */; };
+		CAB3D1BF2A4B3C2400965F5F /* fast-neural-style-transfer-cuphead.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = CAB3D1BB2A4B3C2400965F5F /* fast-neural-style-transfer-cuphead.mlmodel */; };
+		CAB3D1C02A4B3C2400965F5F /* Inceptionv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = CAB3D1BC2A4B3C2400965F5F /* Inceptionv3.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +24,11 @@
 		CAB3D1AA2A4A64A000965F5F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CAB3D1AC2A4A64A100965F5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CAB3D1AF2A4A64A100965F5F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CAB3D1B62A4B3A1800965F5F /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
+		CAB3D1B92A4B3C2400965F5F /* fast-neural-style-transfer-starry-night.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "fast-neural-style-transfer-starry-night.mlmodel"; sourceTree = "<group>"; };
+		CAB3D1BA2A4B3C2400965F5F /* fast-neural-style-transfer-mosaic.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "fast-neural-style-transfer-mosaic.mlmodel"; sourceTree = "<group>"; };
+		CAB3D1BB2A4B3C2400965F5F /* fast-neural-style-transfer-cuphead.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "fast-neural-style-transfer-cuphead.mlmodel"; sourceTree = "<group>"; };
+		CAB3D1BC2A4B3C2400965F5F /* Inceptionv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Inceptionv3.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +45,7 @@
 		CAB3D19C2A4A649F00965F5F = {
 			isa = PBXGroup;
 			children = (
+				CAB3D1B82A4B3B4A00965F5F /* Models */,
 				CAB3D1A72A4A64A000965F5F /* MLARProject */,
 				CAB3D1A62A4A64A000965F5F /* Products */,
 			);
@@ -55,6 +66,7 @@
 				CAB3D1AA2A4A64A000965F5F /* ContentView.swift */,
 				CAB3D1AC2A4A64A100965F5F /* Assets.xcassets */,
 				CAB3D1AE2A4A64A100965F5F /* Preview Content */,
+				CAB3D1B62A4B3A1800965F5F /* ModelController.swift */,
 			);
 			path = MLARProject;
 			sourceTree = "<group>";
@@ -65,6 +77,17 @@
 				CAB3D1AF2A4A64A100965F5F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		CAB3D1B82A4B3B4A00965F5F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CAB3D1BB2A4B3C2400965F5F /* fast-neural-style-transfer-cuphead.mlmodel */,
+				CAB3D1BA2A4B3C2400965F5F /* fast-neural-style-transfer-mosaic.mlmodel */,
+				CAB3D1B92A4B3C2400965F5F /* fast-neural-style-transfer-starry-night.mlmodel */,
+				CAB3D1BC2A4B3C2400965F5F /* Inceptionv3.mlmodel */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +160,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAB3D1B72A4B3A1800965F5F /* ModelController.swift in Sources */,
 				CAB3D1AB2A4A64A000965F5F /* ContentView.swift in Sources */,
+				CAB3D1BE2A4B3C2400965F5F /* fast-neural-style-transfer-mosaic.mlmodel in Sources */,
+				CAB3D1BF2A4B3C2400965F5F /* fast-neural-style-transfer-cuphead.mlmodel in Sources */,
+				CAB3D1BD2A4B3C2400965F5F /* fast-neural-style-transfer-starry-night.mlmodel in Sources */,
 				CAB3D1A92A4A64A000965F5F /* MLARProjectApp.swift in Sources */,
+				CAB3D1C02A4B3C2400965F5F /* Inceptionv3.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
