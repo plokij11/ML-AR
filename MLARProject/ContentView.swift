@@ -22,7 +22,7 @@ struct ContentView: View {
                             Text("Object:")
                                 .bold()
                                 .font(.system(size: 23))
-                            TextField("Enter object", text: .constant(""))
+                            TextField("Info", text: .constant(""))
                                 .font(.system(size: 23))
                             Button(action: {
                                 isShowingImagePicker = true
