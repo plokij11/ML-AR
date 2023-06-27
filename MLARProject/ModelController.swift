@@ -70,7 +70,8 @@ class ModelController {
         
     }
     
-    func transformToCuphead(image: CIImage) {
+    func transformToCuphead(image: CIImage) -> Image{
+        var res = UIImage()
         guard let model = try? VNCoreMLModel(for: fast_neural_style_transfer_cuphead().model) else {
             fatalError("FATAL ERROR: Loading CoreML Model Failed")
         }
@@ -81,18 +82,7 @@ class ModelController {
             }
             
             if let firstResult = results.first {
-                let ciimage: CIImage = CIImage(cvPixelBuffer: firstResult.pixelBuffer)
-                let context: CIContext = CIContext(options: nil)
-                
-                if let cgImage: CGImage = context.createCGImage(ciimage, from: ciimage.extent) {
-                    let myImage: UIImage = UIImage(cgImage: cgImage)
-                    DispatchQueue.main.async {
-                        if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }),
-                           let imageView = window.rootViewController?.view.viewWithTag(2) as? UIImageView {
-                            imageView.image = myImage
-                        }
-                    }
-                }
+                res = UIImage(pixelBuffer: firstResult.pixelBuffer)!
             }
         }
         
@@ -102,8 +92,36 @@ class ModelController {
         } catch {
             print(error)
         }
+        return Image(uiImage: res)
+    }
+    
+    func transformToStarryNight(image: CIImage) -> Image{
+        var res = UIImage()
+        guard let model = try? VNCoreMLModel(for: fast_neural_style_transfer_starry_night().model) else {
+            fatalError("FATALERROR: Loading CoreMl Model Failed")
+        }
+        
+        let request = VNCoreMLRequest(model: model) { (request, error) in
+            guard let results = request.results as? [VNPixelBufferObservation] else {
+                fatalError("FATALERROR: Model failed to precess image.")
+            }
+            
+            
+            if let firstResult = results.first {
+                res = UIImage(pixelBuffer: firstResult.pixelBuffer)!
+            }
+        }
+        let handler = VNImageRequestHandler(ciImage: image, options: [:])
+        do {
+            try handler.perform([request])
+        } catch {
+            print(error)
+        }
+        return Image(uiImage: res)
     }
 }
+
+
 
 
 extension UIImage {

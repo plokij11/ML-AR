@@ -158,9 +158,12 @@ struct MenuView: View {
             
             HStack {
                 Button(action: {
-                    // Дії для третьої кнопки
+                    let uiImage = selectedImage.asUIImage()
+                        if let ciImage = CIImage(image: uiImage) {
+                            resultedImage = modelController.transformToCuphead(image: ciImage)
+                        }
                 }) {
-                    Text("Button 3")
+                    Text("Cuphead")
                         .padding()
                         .background(Color.orange)
                         .foregroundColor(.white)
@@ -168,9 +171,12 @@ struct MenuView: View {
                 }
                 
                 Button(action: {
-                    // Дії для четвертої кнопки
+                    let uiImage = selectedImage.asUIImage()
+                        if let ciImage = CIImage(image: uiImage) {
+                            resultedImage = modelController.transformToStarryNight(image: ciImage)
+                        }
                 }) {
-                    Text("Button 4")
+                    Text("StarryNight")
                         .padding()
                         .background(Color.red)
                         .foregroundColor(.white)
