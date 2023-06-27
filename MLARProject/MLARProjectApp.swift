@@ -2,7 +2,7 @@
 //  MLARProjectApp.swift
 //  MLARProject
 //
-//  Created by Vladislav Kazistov on 27.06.2023.
+//  Created by Vladislav Kazistov & Petro Yaremenko on 21.06.2023.
 //
 
 import SwiftUI

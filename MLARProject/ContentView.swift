@@ -2,15 +2,15 @@
 //  ContentView.swift
 //  MLARProject
 //
-//  Created by Vladislav Kazistov on 27.06.2023.
+//  Created by Vladislav Kazistov & Petro Yaremenko on 21.06.2023.
 //
 
 import SwiftUI
 
+
 struct ContentView: View {
     @State private var selectedImage: Image? = nil
     @State private var resultedImage: Image? = nil
-    
     @State private var isShowingMenu: Bool = false
     @State private var isShowingImagePicker: Bool = false
     @State private var isShowingError: Bool = false
@@ -123,110 +123,6 @@ struct ContentView: View {
     }
 }
 
-struct MenuView: View {
-    @Binding var selectedImage: Image?
-    @Binding var resultedImage: Image?
-    @Binding var label123: String
-    
-    let modelController: ModelController
-    var body: some View {
-        VStack {
-            
-            HStack {
-                Button(action: {
-
-                    let uiImage = selectedImage.asUIImage()
-                        if let ciImage = CIImage(image: uiImage) {
-                            label123 = modelController.detect(image: ciImage)!
-                        }
-                
-                }) {
-                    Text("Detection")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                
-                Button(action: {
-                    let uiImage = selectedImage.asUIImage()
-                        if let ciImage = CIImage(image: uiImage) {
-                            resultedImage = modelController.transformToMosaic(image: ciImage)!
-                        }
-                }) {
-                    Text("Mosaic")
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-            }
-            
-            HStack {
-                Button(action: {
-                    let uiImage = selectedImage.asUIImage()
-                        if let ciImage = CIImage(image: uiImage) {
-                            resultedImage = modelController.transformToCuphead(image: ciImage)!
-                        }
-                }) {
-                    Text("Cuphead")
-                        .padding()
-                        .background(Color.orange)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                
-                Button(action: {
-                    let uiImage = selectedImage.asUIImage()
-                        if let ciImage = CIImage(image: uiImage) {
-                            resultedImage = modelController.transformToStarryNight(image: ciImage)!
-                        }
-                }) {
-                    Text("StarryNight")
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-            }
-            
-            HStack {
-                Button(action: {
-
-//                    let uiImage = selectedImage.asUIImage()
-//                        if let ciImage = CIImage(image: uiImage) {
-//                            label123 = modelController.detect(image: ciImage)
-//                        }
-                
-                }) {
-                    Text("Cartoon")
-                        .padding()
-                        .background(Color.black)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                
-                Button(action: {
-                    
-//                    let uiImage = selectedImage.asUIImage()
-//                        if let ciImage = CIImage(image: uiImage) {
-//                            resultedImage = modelController.transformToStarryNight(image: ciImage)
-//                        }
-                    
-                }) {
-                    Text("Anime")
-                        .padding()
-                        .background(Color.purple)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                
-                
-            }
-        }
-        .padding()
-    }
-}
 
 struct ImagePicker: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
@@ -290,8 +186,6 @@ extension View {
         let size = controller.sizeThatFits(in: UIScreen.main.bounds.size)
         controller.view.bounds = CGRect(origin: .zero, size: size)
         controller.view.sizeToFit()
-        
-// here is the call to the function that converts UIView to UIImage: `.asUIImage()`
         let image = controller.view.asUIImage()
         controller.view.removeFromSuperview()
         return image
