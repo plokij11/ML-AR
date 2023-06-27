@@ -17,11 +17,15 @@ struct ContentView: View {
                 VStack {
                     HStack {
                         Text("Object:")
+                            .bold()
+                            .font(.system(size: 23))
                         TextField("Enter object", text: .constant(""))
+                            .font(.system(size: 23))
                         Button(action: {
                             openImagePicker()
                         }) {
                             Image(systemName: "camera")
+                                .font(.system(size: 23))
                         }
                         .padding(.leading, 8)
                     }
@@ -47,7 +51,7 @@ struct ContentView: View {
                     Spacer()
                 }
             }
-            .padding(.top, 40) // Доданий відступ зверху
+            .padding(.top, 50) // Доданий відступ зверху
 
             VStack {
                 Spacer()
