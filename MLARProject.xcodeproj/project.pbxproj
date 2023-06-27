@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0457D6422A4B65DD00FB7840 /* whiteboxcartoonization.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0457D6412A4B65DD00FB7840 /* whiteboxcartoonization.mlmodel */; };
+		0457D6442A4B661500FB7840 /* animeganHayao.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0457D6432A4B661400FB7840 /* animeganHayao.mlmodel */; };
 		CAB3D1A92A4A64A000965F5F /* MLARProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB3D1A82A4A64A000965F5F /* MLARProjectApp.swift */; };
 		CAB3D1AB2A4A64A000965F5F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB3D1AA2A4A64A000965F5F /* ContentView.swift */; };
 		CAB3D1AD2A4A64A100965F5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAB3D1AC2A4A64A100965F5F /* Assets.xcassets */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0457D6412A4B65DD00FB7840 /* whiteboxcartoonization.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = whiteboxcartoonization.mlmodel; sourceTree = "<group>"; };
+		0457D6432A4B661400FB7840 /* animeganHayao.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = animeganHayao.mlmodel; sourceTree = "<group>"; };
 		CAB3D1A52A4A64A000965F5F /* MLARProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MLARProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAB3D1A82A4A64A000965F5F /* MLARProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLARProjectApp.swift; sourceTree = "<group>"; };
 		CAB3D1AA2A4A64A000965F5F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -85,6 +89,8 @@
 				CAB3D1BB2A4B3C2400965F5F /* fast-neural-style-transfer-cuphead.mlmodel */,
 				CAB3D1BA2A4B3C2400965F5F /* fast-neural-style-transfer-mosaic.mlmodel */,
 				CAB3D1B92A4B3C2400965F5F /* fast-neural-style-transfer-starry-night.mlmodel */,
+				0457D6412A4B65DD00FB7840 /* whiteboxcartoonization.mlmodel */,
+				0457D6432A4B661400FB7840 /* animeganHayao.mlmodel */,
 				CAB3D1BC2A4B3C2400965F5F /* Inceptionv3.mlmodel */,
 			);
 			path = Models;
@@ -160,10 +166,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0457D6442A4B661500FB7840 /* animeganHayao.mlmodel in Sources */,
 				CAB3D1B72A4B3A1800965F5F /* ModelController.swift in Sources */,
 				CAB3D1AB2A4A64A000965F5F /* ContentView.swift in Sources */,
 				CAB3D1BE2A4B3C2400965F5F /* fast-neural-style-transfer-mosaic.mlmodel in Sources */,
 				CAB3D1BF2A4B3C2400965F5F /* fast-neural-style-transfer-cuphead.mlmodel in Sources */,
+				0457D6422A4B65DD00FB7840 /* whiteboxcartoonization.mlmodel in Sources */,
 				CAB3D1BD2A4B3C2400965F5F /* fast-neural-style-transfer-starry-night.mlmodel in Sources */,
 				CAB3D1A92A4A64A000965F5F /* MLARProjectApp.swift in Sources */,
 				CAB3D1C02A4B3C2400965F5F /* Inceptionv3.mlmodel in Sources */,

@@ -31,13 +31,17 @@ struct ContentView: View {
                                 .font(.system(size: 23))
                             Button(action: {
                                 isShowingImagePicker = true
+                                label123 = ""
+                                resultedImage = nil
                             }) {
                                 Image(systemName: "camera")
                                     .font(.system(size: 23))
+                                
                             }
                             .padding(.leading, 8)
                             .sheet(isPresented: $isShowingImagePicker, onDismiss: loadImage) {
                                 ImagePicker(image: $selectedImage)
+                                
                             }
                         }
                         .padding()
@@ -121,7 +125,7 @@ struct ContentView: View {
 struct MenuView: View {
     @Binding var selectedImage: Image?
     @Binding var resultedImage: Image?
-    @Binding var label123: String // Add binding parameter for label123
+    @Binding var label123: String
     
     let modelController: ModelController
     var body: some View {
@@ -131,7 +135,7 @@ struct MenuView: View {
 
                     let uiImage = selectedImage.asUIImage()
                         if let ciImage = CIImage(image: uiImage) {
-                            label123 = modelController.detect(image: ciImage)
+                            label123 = modelController.detect(image: ciImage)!
                         }
                 
                 }) {
@@ -145,7 +149,7 @@ struct MenuView: View {
                 Button(action: {
                     let uiImage = selectedImage.asUIImage()
                         if let ciImage = CIImage(image: uiImage) {
-                            resultedImage = modelController.transformToMosaic(image: ciImage)
+                            resultedImage = modelController.transformToMosaic(image: ciImage)!
                         }
                 }) {
                     Text("Mosaic")
@@ -160,7 +164,7 @@ struct MenuView: View {
                 Button(action: {
                     let uiImage = selectedImage.asUIImage()
                         if let ciImage = CIImage(image: uiImage) {
-                            resultedImage = modelController.transformToCuphead(image: ciImage)
+                            resultedImage = modelController.transformToCuphead(image: ciImage)!
                         }
                 }) {
                     Text("Cuphead")
@@ -173,7 +177,7 @@ struct MenuView: View {
                 Button(action: {
                     let uiImage = selectedImage.asUIImage()
                         if let ciImage = CIImage(image: uiImage) {
-                            resultedImage = modelController.transformToStarryNight(image: ciImage)
+                            resultedImage = modelController.transformToStarryNight(image: ciImage)!
                         }
                 }) {
                     Text("StarryNight")
