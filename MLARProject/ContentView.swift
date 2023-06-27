@@ -6,34 +6,40 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
     @State private var selectedImage: Image? = nil
     @State private var isShowingMenu: Bool = false
-
+    @State private var isShowingImagePicker: Bool = false
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    HStack {
-                        Text("Object:")
-                            .bold()
-                            .font(.system(size: 23))
-                        TextField("Enter object", text: .constant(""))
-                            .font(.system(size: 23))
-                        Button(action: {
-                            openImagePicker()
-                        }) {
-                            Image(systemName: "camera")
+                    VStack {
+                        HStack {
+                            Text("Object:")
+                                .bold()
                                 .font(.system(size: 23))
+                            TextField("Enter object", text: .constant(""))
+                                .font(.system(size: 23))
+                            Button(action: {
+                                isShowingImagePicker = true
+                            }) {
+                                Image(systemName: "camera")
+                                    .font(.system(size: 23))
+                            }
+                            .padding(.leading, 8)
+                            .sheet(isPresented: $isShowingImagePicker, onDismiss: loadImage) {
+                                ImagePicker(image: $selectedImage)
+                            }
                         }
-                        .padding(.leading, 8)
+                        .padding()
                     }
-                    .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.white)
-
-
+                    
                     // Виведення обраного зображення
                     if let image = selectedImage {
                         image
@@ -41,21 +47,15 @@ struct ContentView: View {
                             .aspectRatio(contentMode: .fit)
                             .padding()
                     }
-
-                    VStack {
-                        ImagePlaceholderView(image: selectedImage)
-                        ImagePlaceholderView(image: nil)
-                    }
-                    .padding()
-
+                    
                     Spacer()
                 }
             }
-            .padding(.top, 50) // Доданий відступ зверху
-
+            .padding(.top, 80) // Збільшений відступ зверху
+            
             VStack {
                 Spacer()
-
+                
                 if isShowingMenu {
                     MenuView()
                         .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height / 4) // Вилітає на чверть висоти екрана
@@ -64,7 +64,7 @@ struct ContentView: View {
                         .padding()
                         .transition(.move(edge: .bottom))
                 }
-
+                
                 Button(action: {
                     isShowingMenu.toggle()
                 }) {
@@ -77,32 +77,12 @@ struct ContentView: View {
         }
         .edgesIgnoringSafeArea(.all)
     }
-
-    func openImagePicker() {
-        // Код для відкриття галереї фотографій та вибору зображення
-        // Після вибору зображення, присвоєння його змінній selectedImage
-        // Як приклад, тут використано додання фото з файлової системи:
-        if let image = UIImage(named: "your_image_name") {
-            selectedImage = Image(uiImage: image)
-        }
-    }
-}
-
-struct ImagePlaceholderView: View {
-    var image: Image?
-
-    var body: some View {
-            ZStack {
-                if let image = image {
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } else {
-                    Rectangle()
-                        .foregroundColor(.gray)
-                }
-            }
-            .frame(height: 300)
+    
+    func loadImage() {
+        // Викликається після вибору фотографії в ImagePicker
+        guard let selectedImage = selectedImage else { return }
+        // Можна виконати додаткову обробку або зберегти вибрану фотографію
+        print("Selected image: \(selectedImage)")
     }
 }
 
@@ -119,7 +99,7 @@ struct MenuView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
-
+                
                 Button(action: {
                     // Дії для другої кнопки
                 }) {
@@ -130,7 +110,7 @@ struct MenuView: View {
                         .cornerRadius(10)
                 }
             }
-
+            
             HStack {
                 Button(action: {
                     // Дії для третьої кнопки
@@ -141,7 +121,7 @@ struct MenuView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
-
+                
                 Button(action: {
                     // Дії для четвертої кнопки
                 }) {
@@ -157,9 +137,51 @@ struct MenuView: View {
     }
 }
 
+struct ImagePicker: UIViewControllerRepresentable {
+    @Environment(\.presentationMode) var presentationMode
+    @Binding var image: Image?
+    
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+        @Binding var presentationMode: PresentationMode
+        @Binding var image: Image?
+        
+        init(presentationMode: Binding<PresentationMode>, image: Binding<Image?>) {
+            _presentationMode = presentationMode
+            _image = image
+        }
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let uiImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                image = Image(uiImage: uiImage)
+            }
+            presentationMode.dismiss()
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            presentationMode.dismiss()
+        }
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(presentationMode: presentationMode, image: $image)
+    }
+    
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePicker>) {
+        // Оновлення контролера відображення, якщо необхідно
+    }
+}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
+
+
 
