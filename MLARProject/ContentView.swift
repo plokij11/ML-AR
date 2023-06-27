@@ -9,9 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedImage: Image? = nil
+    @State private var resultedImage: Image? = nil
+    
     @State private var isShowingMenu: Bool = false
     @State private var isShowingImagePicker: Bool = false
     @State private var isShowingError: Bool = false
+    @State private var label123: String = ""
     
     let modelController = ModelController()
     
@@ -24,7 +27,7 @@ struct ContentView: View {
                             Text("Object:")
                                 .bold()
                                 .font(.system(size: 23))
-                            TextField("Info", text: .constant(""))
+                            TextField("not detected yet", text: $label123)
                                 .font(.system(size: 23))
                             Button(action: {
                                 isShowingImagePicker = true
@@ -50,6 +53,26 @@ struct ContentView: View {
                             .padding()
                     }
                     
+                    
+                    if let image = resultedImage {
+                        VStack {
+                            HStack {
+                                Text("RESULT:")
+                                    .bold()
+                                    .font(.system(size: 23))
+                                
+                                .padding(.leading, 8)
+                            }
+                            .padding()
+                        }
+                        .frame(maxWidth: .infinity)
+                        .background(Color.white)
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding()
+                    }
+                    
                     Spacer()
                 }
             }
@@ -59,7 +82,7 @@ struct ContentView: View {
                 Spacer()
                 
                 if isShowingMenu {
-                    MenuView(modelController: modelController)
+                    MenuView(selectedImage: $selectedImage, resultedImage: $resultedImage, label123: $label123, modelController: modelController)
                         .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height / 4) // Вилітає на чверть висоти екрана
                         .background(Color.white)
                         .cornerRadius(20)
@@ -96,18 +119,21 @@ struct ContentView: View {
 }
 
 struct MenuView: View {
-    let modelController: ModelController
+    @Binding var selectedImage: Image?
+    @Binding var resultedImage: Image?
+    @Binding var label123: String // Add binding parameter for label123
     
+    let modelController: ModelController
     var body: some View {
         VStack {
             HStack {
                 Button(action: {
-                    // Дії для першої кнопки
-                    if let uiImage = UIImage(named: "your_image_file_name") {
+
+                    let uiImage = selectedImage.asUIImage()
                         if let ciImage = CIImage(image: uiImage) {
-                            modelController.detect(image: ciImage)
+                            label123 = modelController.detect(image: ciImage)
                         }
-                    }
+                
                 }) {
                     Text("Detection")
                         .padding()
@@ -117,9 +143,12 @@ struct MenuView: View {
                 }
                 
                 Button(action: {
-                    // Дії для другої кнопки
+                    let uiImage = selectedImage.asUIImage()
+                        if let ciImage = CIImage(image: uiImage) {
+                            resultedImage = modelController.transformToMosaic(image: ciImage)
+                        }
                 }) {
-                    Text("Button 2")
+                    Text("Mosaic")
                         .padding()
                         .background(Color.green)
                         .foregroundColor(.white)
@@ -199,3 +228,36 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+
+extension View {
+// This function changes our View to UIView, then calls another function
+// to convert the newly-made UIView to a UIImage.
+    public func asUIImage() -> UIImage {
+        let controller = UIHostingController(rootView: self)
+        
+ // Set the background to be transparent incase the image is a PNG, WebP or (Static) GIF
+        controller.view.backgroundColor = .clear
+        
+        controller.view.frame = CGRect(x: 0, y: CGFloat(Int.max), width: 1, height: 1)
+        UIApplication.shared.windows.first!.rootViewController?.view.addSubview(controller.view)
+        
+        let size = controller.sizeThatFits(in: UIScreen.main.bounds.size)
+        controller.view.bounds = CGRect(origin: .zero, size: size)
+        controller.view.sizeToFit()
+        
+// here is the call to the function that converts UIView to UIImage: `.asUIImage()`
+        let image = controller.view.asUIImage()
+        controller.view.removeFromSuperview()
+        return image
+    }
+}
+
+extension UIView {
+// This is the function to convert UIView to UIImage
+    public func asUIImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
+        }
+    }
+}
